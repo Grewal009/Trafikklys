@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trafikklys oppgave</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="lightRed" class="light off"></div>
+      <div id="lightYellow" class="light off"></div>
+      <div id="lightGreen" class="light off"></div>
+      <div class="stand"></div>
+    </div>
+    <div class="knapper">
+      <button onclick="turnOnReadLight('red')">Rød</button>
+      <button onclick="turnOnReadAndYellowLight('red','yellow')">
+        Rød/Gul
+      </button>
+      <button onclick="turnOnYellowLight('yellow')">Gul</button>
+      <button onclick="turnOnGreenLight('green')">Grønn</button>
+      <button onclick="switchOff('red','yellow','green')">Slå av</button>
+    </div>
+
+    <script>
+      const redLight = document.getElementById("lightRed");
+      const yellowLight = document.getElementById("lightYellow");
+      const greenLight = document.getElementById("lightGreen");
+
+      function turnOnReadLight(light) {
+        redLight.classList.add(light);
+        yellowLight.classList.remove("yellow");
+        greenLight.classList.remove("green");
+      }
+
+      function turnOnReadAndYellowLight(light1, light2) {
+        redLight.classList.add(light1);
+        yellowLight.classList.add(light2);
+        greenLight.classList.remove("green");
+      }
+
+      function turnOnYellowLight(light) {
+        yellowLight.classList.add(light);
+        redLight.classList.remove("red");
+        greenLight.classList.remove("green");
+      }
+
+      function turnOnGreenLight(light) {
+        greenLight.classList.add(light);
+        redLight.classList.remove("red");
+        yellowLight.classList.remove("yellow");
+      }
+
+      function switchOff(red, yellow, green) {
+        redLight.classList.remove(red);
+        yellowLight.classList.remove(yellow);
+        greenLight.classList.remove(green);
+      }
+    </script>
+  </body>
+</html>
