@@ -14,19 +14,45 @@
       <div class="stand"></div>
     </div>
     <div class="knapper">
-      <button onclick="turnOnReadLight('red')">Rød</button>
-      <button onclick="turnOnReadAndYellowLight('red','yellow')">
-        Rød/Gul
-      </button>
-      <button onclick="turnOnYellowLight('yellow')">Gul</button>
-      <button onclick="turnOnGreenLight('green')">Grønn</button>
-      <button onclick="switchOff('red','yellow','green')">Slå av</button>
+      <div style="display: flex">
+        <div>
+          <div>
+            <button onclick="turnOnReadLight('red')">Rød</button>
+            <button onclick="turnOnReadAndYellowLight('red','yellow')">
+              Rød/Gul
+            </button>
+          </div>
+          <div>
+            <button onclick="turnOnYellowLight('yellow')">Gul</button>
+            <button onclick="turnOnGreenLight('green')">Grønn</button>
+          </div>
+        </div>
+        <div>
+          <button onclick="switchOff('red','yellow','green')" class="btn">
+            Slå av manual modus
+          </button>
+        </div>
+      </div>
+      <div>
+        <button onclick="onAutomaticMode()" class="btn">
+          slå på automatisk modus
+        </button>
+        <button onclick="stopAutomaticMode()" class="btn">
+          slå av automatisk modus
+        </button>
+      </div>
     </div>
 
     <script>
       const redLight = document.getElementById("lightRed");
       const yellowLight = document.getElementById("lightYellow");
       const greenLight = document.getElementById("lightGreen");
+      let timer1;
+      let timer2;
+      let timer3;
+      let timer4;
+      let automaticMode = true;
+      let manualMode = false;
 
       function turnOnReadLight(light) {
         redLight.classList.add(light);
@@ -56,6 +82,51 @@
         redLight.classList.remove(red);
         yellowLight.classList.remove(yellow);
         greenLight.classList.remove(green);
+      }
+
+      workAutomatic();
+
+      function workAutomatic() {
+        if (automaticMode) {
+          turnOnReadLight("red");
+          clearTimeout(timer1);
+          timer1 = setTimeout(function () {
+            turnOnReadAndYellowLight("red", "yellow");
+          }, 3000);
+          clearTimeout(timer2);
+          timer2 = setTimeout(function () {
+            turnOnGreenLight("green");
+          }, 4000);
+          clearTimeout(timer3);
+          timer3 = setTimeout(function () {
+            turnOnYellowLight("yellow");
+          }, 7000);
+
+          console.log("timers : ", timer1, timer2, timer3);
+          repeat();
+        }
+      }
+
+      function repeat() {
+        clearTimeout(timer4);
+        time4 = setTimeout(function () {
+          workAutomatic();
+        }, 8000);
+      }
+
+      function stopAutomaticMode() {
+        automaticMode = false;
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+        clearTimeout(timer4);
+        switchOff("red", "yellow", "green");
+      }
+      function onAutomaticMode() {
+        if (!automaticMode) {
+          automaticMode = true;
+          workAutomatic();
+        }
       }
     </script>
   </body>
